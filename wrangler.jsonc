@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "web-radio-college",
+  "compatibility_date": "2026-04-26",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "truc web radio nb jsp 2"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
