@@ -1,0 +1,15 @@
+# Configuration Netlify pour la version STANDALONE (racine)
+# Si vous déployez project-source/, voir project-source/netlify.toml
+
+[build]
+  publish = "."
+  command = ""
+
+# Headers de sécurité
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
