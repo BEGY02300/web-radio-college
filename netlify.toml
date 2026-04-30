@@ -1,0 +1,55 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║  CONFIGURATION NETLIFY — Web Radio Collège v5                      ║
+# ╠══════════════════════════════════════════════════════════════════╣
+# ║  Site 100% statique (HTML + CSS + JS modules)                      ║
+# ║  Aucun build : on publie le dossier racine tel quel.               ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+[build]
+  publish = "."
+  # Pas de commande de build — tout est en statique pur
+  command = "echo 'No build step — pure static site'"
+
+# ───────────────────────────────────────────────────────────────────
+# Cache & headers
+# ───────────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Pas de cache pour env.js — pour pouvoir mettre à jour les clés
+[[headers]]
+  for = "/env.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# Cache long pour les assets statiques (favicon, CSS éventuel)
+[[headers]]
+  for = "/favicon.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# Les modules JS : cache léger pour pouvoir déployer rapidement
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
+# index.html : pas de cache (toujours dernière version)
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# ───────────────────────────────────────────────────────────────────
+# SPA fallback (toutes les routes inconnues → index.html)
+# ───────────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Web Radio Collège — Podcasts, reportages et vidéos. Une expérience d'écoute moderne." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f5f1e8" />
+
+  <!-- Google AdSense (verification) -->
+  <meta name="google-adsense-account" content="ca-pub-6205152848310463">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Web Radio Collège" />
+  <meta property="og:description" content="Podcasts, reportages et vidéos de votre web radio." />
+  <meta property="og:type" content="website" />
+
+  <!-- Content Security Policy : élargie pour AdSense + Stripe Payment Links -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdn.tailwindcss.com https://esm.sh https://unpkg.com https://www.gstatic.com https://www.google.com https://apis.google.com https://*.firebaseapp.com https://*.googleapis.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://js.stripe.com;
+    style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:;
+    img-src 'self' https: data: blob:;
+    media-src 'self' https://raw.githubusercontent.com https://*.githubusercontent.com https://github.com blob:;
+    connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://*.githubusercontent.com https://*.supabase.co wss://*.supabase.co https://*.firebaseio.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://pagead2.googlesyndication.com https://*.googlesyndication.com;
+    frame-src https://*.firebaseapp.com https://www.google.com https://recaptcha.google.com https://www.youtube-nocookie.com https://www.youtube.com https://googleads.g.doubleclick.net https://*.googlesyndication.com https://js.stripe.com https://hooks.stripe.com https://buy.stripe.com;
+    object-src 'none';
+    base-uri 'self';
+  " />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <title>Web Radio Collège — Podcasts, Reportages, Vidéos</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Sora', 'Inter', 'system-ui', 'sans-serif'],
+            hand: ['Caveat', 'Inter', 'cursive'],
+          },
+          colors: {
+            // Palette "papier crème" inspirée de la maquette
+            paper: {
+              50:'#fbf8f1', 100:'#f5f1e8', 200:'#ede6d3', 300:'#e0d5b6',
+              400:'#cdbe93', 500:'#b5a06f', 600:'#8a7a51', 700:'#5e5237',
+              800:'#3a321f', 900:'#1f1c12',
+            },
+            ink: {
+              50:'#f5f5f4', 100:'#e7e5e1', 200:'#c8c5bd', 300:'#9c988e',
+              400:'#6f6b5f', 500:'#4a463c', 600:'#322f28', 700:'#1f1d18',
+              800:'#13110d', 900:'#080704',
+            },
+            brand: {
+              50:'#f0f9ff', 100:'#e0f2fe', 200:'#bae6fd', 300:'#7dd3fc',
+              400:'#38bdf8', 500:'#0ea5e9', 600:'#0284c7', 700:'#0369a1',
+              800:'#075985', 900:'#0c4a6e', 950:'#082f49',
+            },
+            accent: {
+              400:'#a78bfa', 500:'#8b5cf6', 600:'#7c3aed', 700:'#6d28d9',
+            },
+          },
+          keyframes: {
+            'gradient-x': {
+              '0%, 100%': { 'background-position': '0% 50%' },
+              '50%': { 'background-position': '100% 50%' },
+            },
+            'pulse-soft': {
+              '0%, 100%': { opacity: 1 },
+              '50%': { opacity: 0.7 },
+            },
+            'slide-up': {
+              from: { opacity: 0, transform: 'translateY(20px)' },
+              to: { opacity: 1, transform: 'translateY(0)' },
+            },
+          },
+          animation: {
+            'gradient-x': 'gradient-x 8s ease infinite',
+            'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
+            'slide-up': 'slide-up 0.4s ease-out',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts (Inter + Sora + Caveat pour annotations style "manuscrit") -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@400;500;600;700;800&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+
+  <!-- Google AdSense (chargement async) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6205152848310463" crossorigin="anonymous"></script>
+
+  <style>
+    html, body {
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .font-display { font-family: 'Sora', 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; }
+    .font-hand { font-family: 'Caveat', 'Inter', cursive; letter-spacing: 0; }
+
+    /* ═════════════════════════════════════════════════════════════
+       PALETTE "PAPIER CRÈME" — inspirée de la maquette wireframe
+       Fond beige clair, traits noirs fins, ombres très douces
+       ═════════════════════════════════════════════════════════════ */
+    body.theme-paper {
+      background: #f5f1e8;
+      color: #13110d;
+      background-image:
+        radial-gradient(rgba(50, 47, 40, 0.04) 1px, transparent 1px),
+        radial-gradient(rgba(50, 47, 40, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+    }
+
+    /* Cartes type "panneau papier" : fond blanc cassé, bordure fine ink, ombre très subtile */
+    .paper-card {
+      background: #fbf8f1;
+      border: 1.5px solid #322f28;
+      border-radius: 16px;
+      box-shadow: 4px 4px 0 0 rgba(50, 47, 40, 0.08);
+    }
+    .paper-card-soft {
+      background: #fbf8f1;
+      border: 1px solid rgba(50, 47, 40, 0.15);
+      border-radius: 14px;
+    }
+    .paper-input {
+      background: #fbf8f1;
+      border: 1px solid #322f28;
+      border-radius: 10px;
+      color: #13110d;
+    }
+    .paper-input:focus {
+      outline: 2px solid #322f28;
+      outline-offset: 2px;
+    }
+    .paper-btn {
+      background: #fbf8f1;
+      border: 1.5px solid #322f28;
+      border-radius: 10px;
+      color: #13110d;
+      transition: all 0.15s;
+    }
+    .paper-btn:hover { background: #ede6d3; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 0 rgba(50,47,40,0.25); }
+    .paper-btn:active { transform: translate(0, 0); box-shadow: 1px 1px 0 0 rgba(50,47,40,0.25); }
+    .paper-btn-primary {
+      background: #322f28;
+      color: #fbf8f1;
+      border: 1.5px solid #322f28;
+      border-radius: 10px;
+      transition: all 0.15s;
+    }
+    .paper-btn-primary:hover { background: #1f1d18; transform: translate(-1px, -1px); box-shadow: 3px 3px 0 0 rgba(50,47,40,0.4); }
+
+    /* Annotations "manuscrites" pour aide */
+    .annotation { font-family: 'Caveat', cursive; color: #6f6b5f; font-size: 1.05rem; }
+
+    /* Scrollbar discrète crème */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(50,47,40,0.25); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(50,47,40,0.5); background-clip: padding-box; }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity:0; transform: translateY(8px);} to { opacity:1; transform:translateY(0);} }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    @keyframes scaleIn { from { opacity:0; transform: scale(0.96);} to { opacity:1; transform:scale(1);} }
+    .scale-in { animation: scaleIn 0.25s ease-out; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { border: 3px solid rgba(14,165,233,0.2); border-top-color: #0ea5e9; border-radius: 50%; animation: spin 0.8s linear infinite; }
+
+    /* Glass morphism (gardé pour les modals) */
+    .glass {
+      background: rgba(245, 241, 232, 0.85);
+      backdrop-filter: blur(16px) saturate(120%);
+      -webkit-backdrop-filter: blur(16px) saturate(120%);
+      border: 1px solid rgba(50,47,40,0.15);
+    }
+    .glass-light {
+      background: rgba(251, 248, 241, 0.85);
+      backdrop-filter: blur(16px) saturate(120%);
+      -webkit-backdrop-filter: blur(16px) saturate(120%);
+      border: 1px solid rgba(50,47,40,0.12);
+    }
+
+    /* Gradients réutilisables */
+    .gradient-brand {
+      background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 50%, #ec4899 100%);
+      background-size: 200% 200%;
+    }
+    .gradient-podcasts { background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%); }
+    .gradient-reportages { background: linear-gradient(135deg, #f43f5e 0%, #f97316 100%); }
+    .gradient-videos { background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); }
+
+    /* Cartes média style "papier" avec hover doux */
+    .media-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .media-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 0 rgba(50, 47, 40, 0.2);
+    }
+
+    /* Bouton play (cercle ink sur papier) */
+    .play-btn {
+      box-shadow: 0 4px 20px rgba(50, 47, 40, 0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .play-btn:hover { box-shadow: 0 6px 28px rgba(50, 47, 40, 0.5), inset 0 1px 0 rgba(255,255,255,0.25); }
+
+    /* Range slider custom (volume + progression) */
+    input[type="range"].slider-modern {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    input[type="range"].slider-modern::-webkit-slider-runnable-track {
+      height: 6px;
+      background: rgba(148,163,184,0.3);
+      border-radius: 999px;
+    }
+    input[type="range"].slider-modern::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px; height: 16px;
+      background: white;
+      border-radius: 50%;
+      margin-top: -5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      transition: transform 0.15s;
+    }
+    input[type="range"].slider-modern::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    input[type="range"].slider-modern::-moz-range-track { height: 6px; background: rgba(148,163,184,0.3); border-radius: 999px; }
+    input[type="range"].slider-modern::-moz-range-thumb { width: 16px; height: 16px; background: white; border-radius: 50%; border: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+
+    /* Toast slide-in */
+    @keyframes toastIn { from { opacity:0; transform: translateX(100%);} to { opacity:1; transform:translateX(0);} }
+    @keyframes toastOut { to { opacity:0; transform: translateX(100%);} }
+    .toast-in { animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .toast-out { animation: toastOut 0.25s ease-in forwards; }
+
+    /* Shimmer pour le loading */
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    .shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    /* Aspect ratio pour les covers */
+    .aspect-square { aspect-ratio: 1 / 1; }
+
+    /* Section hero — halos beige doux (papier ensoleillé) */
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .hero-glow.paper { background: #cdbe93; }
+
+    /* Lignes décoratives type "wireframe" pour les sections */
+    .paper-divider {
+      height: 1.5px;
+      background: #322f28;
+      width: 100%;
+    }
+
+    /* Connecteurs/flèches type maquette */
+    .annotation-arrow {
+      position: relative;
+    }
+    .annotation-arrow::before {
+      content: '';
+      position: absolute;
+      left: -22px; top: 50%;
+      width: 18px; height: 1px;
+      background: #6f6b5f;
+    }
+    .annotation-arrow::after {
+      content: '';
+      position: absolute;
+      left: -22px; top: 50%;
+      transform: translateY(-3px);
+      border: 4px solid transparent;
+      border-right-color: #6f6b5f;
+    }
+
+    /* Liens propres */
+    a { color: inherit; text-decoration: none; }
+
+    /* Truncate multi-lignes */
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* Focus visible accessible */
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid #0ea5e9;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body class="theme-paper min-h-screen overflow-x-hidden">
+  <div id="root">
+    <div class="min-h-screen flex items-center justify-center theme-paper">
+      <div class="text-center">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-ink-700 flex items-center justify-center shadow-lg">
+          <i class="fas fa-microphone-lines text-2xl text-paper-50"></i>
+        </div>
+        <div class="spinner w-8 h-8 mx-auto mb-3"></div>
+        <p class="text-ink-700 font-display font-semibold">Web Radio Collège</p>
+        <p class="text-xs text-ink-400 mt-1 font-hand text-base">Chargement…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Variables d'environnement -->
+  <script src="./env.js"></script>
+
+  <!-- Import map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react":             "https://esm.sh/react@18.3.1",
+      "react-dom/client":  "https://esm.sh/react-dom@18.3.1/client",
+      "htm":               "https://esm.sh/htm@3.1.1"
+    }
+  }
+  </script>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

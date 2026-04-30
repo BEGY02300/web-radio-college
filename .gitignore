@@ -1,0 +1,10 @@
+# ⚠️ N'incluez PAS env.js avec vos vraies clés en prod
+# Décommentez la ligne suivante si vos clés sont sensibles :
+# env.js
+
+node_modules
+dist
+.DS_Store
+*.log
+.env
+.env.local
